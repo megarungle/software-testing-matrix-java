@@ -1,8 +1,10 @@
 package Matrix;
 
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatrixTest {
 
@@ -107,6 +109,6 @@ public class MatrixTest {
         double[][] m = {{7, 70, 3}, {-21, 5, 0}, {-1, 0, 1}};
         double res = 1520;
 
-        assertEquals(res, Matrix.det(m), 0);
+        assertEquals(res, Matrix.det(m));
     }
 }
