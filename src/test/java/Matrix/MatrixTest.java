@@ -138,4 +138,13 @@ public class MatrixTest {
     public void parTestSumNormalSizes(double[][] firstMatrix, double[][] secondMatrix, double[][] result) {
         assertTrue(Matrix.isEqual(result, Matrix.sum(firstMatrix, secondMatrix)));
     }
+
+    @Test
+    public void testReadFromFileSum() {
+        double[][] A = Matrix.readFromFile("A");
+        double[][] B = Matrix.readFromFile("B");
+        double[][] C = Matrix.readFromFile("C");
+
+        assertTrue(Matrix.isEqual(C, Matrix.sum(A, B)));
+    }
 }
