@@ -1,8 +1,12 @@
 package Matrix;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.*;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +31,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMultiplyMatricesBadSizes() {
+    public void testMultiplyMatricesBadSizes() throws IllegalArgumentException {
         int row = 50;
         int col = 100;
 
@@ -56,7 +60,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testSumBadSizes() {
+    public void testSumBadSizes() throws IllegalArgumentException {
         int row = 99;
         int col = 2;
 
@@ -94,7 +98,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testSubBadSizes() {
+    public void testSubBadSizes() throws IllegalArgumentException {
         int row = 24;
         int col = 60;
 
@@ -110,5 +114,37 @@ public class MatrixTest {
         double res = 1520;
 
         assertEquals(res, Matrix.det(m));
+    }
+
+    private static Stream<Arguments> getArguments() {
+        return Stream.of(
+                Arguments.of(new double[][]{{100, 101, -102}, {-102, 101, 100}},
+                             new double[][]{{1, 2, 3}, {3, 2, 1}},
+                             new double[][]{{101, 103, -99}, {-99, 103, 101}}),
+                Arguments.of(new double[][]{{-5, 6}, {1, 0}, {2, -3}, {0, 4}},
+                             new double[][]{{1, 4}, {10, -3}, {-6, -3}, {1, 0}},
+                             new double[][]{{-4, 10}, {11, -3}, {-4, -6}, {1, 4}}),
+                Arguments.of(new double[][]{{-400}, {200}, {-1}, {1000}, {5200}},
+                             new double[][]{{-100}, {300}, {6}, {230}, {-1}},
+                             new double[][]{{-500}, {500}, {5}, {1230}, {5199}}),
+                Arguments.of(new double[][]{{6, 7, -9}, {-1, -2, 3}},
+                             new double[][]{{-16, -17, 19}, {11, 12, -13}},
+                             new double[][]{{-10, -10, 10}, {10, 10, -10}})
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getArguments")
+    public void parTestSumNormalSizes(double[][] firstMatrix, double[][] secondMatrix, double[][] result) {
+        assertTrue(Matrix.isEqual(result, Matrix.sum(firstMatrix, secondMatrix)));
+    }
+
+    @Test
+    public void testReadFromFileSum() {
+        double[][] A = Matrix.readFromFile("A");
+        double[][] B = Matrix.readFromFile("B");
+        double[][] C = Matrix.readFromFile("C");
+
+        assertTrue(Matrix.isEqual(C, Matrix.sum(A, B)));
     }
 }

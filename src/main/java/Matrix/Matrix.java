@@ -1,5 +1,11 @@
 package Matrix;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class Matrix {
 
     private static double multiplyMatricesCell(double[][] firstMatrix, double[][] secondMatrix, int row, int col) {
@@ -130,5 +136,34 @@ public class Matrix {
         }
 
         return true;
+    }
+
+    public static double[][] readFromFile(String s) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("src/main/java/resources/" + s + ".txt"),
+                                                    StandardCharsets.UTF_8);
+
+            int col = ((lines.get(0)).split(" ")).length;
+            int row = lines.size();
+
+            double[][] result = new double[row][col];
+
+            int i = 0;
+            for (String line: lines) {
+                String[] linesSplit = line.split(" ");
+                int j = 0;
+                for (String lineSplit: linesSplit) {
+                    result[i][j] = Double.parseDouble(lineSplit);
+                    ++j;
+                }
+                ++i;
+            }
+
+            return result;
+        }
+        catch (IOException e) {
+            System.out.print("Can not open or find " + e.getMessage() + " file!");
+            return null;
+        }
     }
 }
