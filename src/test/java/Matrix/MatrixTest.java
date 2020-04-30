@@ -27,7 +27,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMultiplyMatricesBadSizes() {
+    public void testMultiplyMatricesBadSizes() throws IllegalArgumentException {
         int row = 50;
         int col = 100;
 
@@ -56,7 +56,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testSumBadSizes() {
+    public void testSumBadSizes() throws IllegalArgumentException {
         int row = 99;
         int col = 2;
 
@@ -94,7 +94,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testSubBadSizes() {
+    public void testSubBadSizes() throws IllegalArgumentException {
         int row = 24;
         int col = 60;
 
